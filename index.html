@@ -236,11 +236,6 @@
       border-top: 1px solid #eee;
     }
 
-    .form-btn-section .add-btn {
-      padding: 10px 20px;
-      font-size: 14px;
-    }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -252,6 +247,20 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 18px;
+    }
+
+    .dimension-group {
+      display: flex;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .dimension-group input {
+      flex: 1;
+    }
+
+    .dimension-group select {
+      width: 100px;
     }
 
     label {
@@ -277,6 +286,11 @@
       box-shadow: 0 0 0 3px rgba(11,188,214,0.1);
     }
 
+    .type-manual, .glazing-manual, .color-manual {
+      width: 180px !important;
+      margin-top: 8px;
+    }
+
     .row {
       display: flex;
       justify-content: space-between;
@@ -296,13 +310,80 @@
       color: #2c3e50;
     }
 
+    /* Print Table Styles */
+    .print-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0 10px 0;
+      font-size: 13px;
+      display: none; /* Hidden on screen */
+    }
+
+    .print-table th, .print-table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    .print-table th {
+      background: #f0f4f8;
+      text-align: left;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .print-table .item-details {
+      white-space: pre-wrap;
+      font-size: 13px;
+    }
+
+    .print-table .qty-col {
+      text-align: center;
+      width: 70px;
+    }
+
+    .print-table .sqft-col {
+      text-align: right;
+      width: 110px;
+      font-size: 12px;
+    }
+
+    .print-table .amount-col {
+      text-align: right;
+      width: 110px;
+      font-weight: bold;
+    }
+
+    .print-summary {
+      margin-top: 15px;
+      text-align: right;
+      font-size: 14px;
+      display: none; /* Hidden on screen */
+    }
+
+    .print-summary .extra-line {
+      margin: 6px 0;
+      font-weight: 500;
+    }
+
+    .print-summary .grand-total {
+      font-size: 18px;
+      font-weight: bold;
+      color: #0bbcd6;
+      border-top: 2px solid #0bbcd6;
+      padding-top: 8px;
+      margin-top: 12px;
+    }
+
     .footer {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       gap: 40px;
       margin-top: 40px;
       padding-top: 20px;
       border-top: 2px solid #ddd;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     .total-box {
@@ -312,6 +393,13 @@
     .total-box label {
       font-size: 16px;
       color: #555;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .total-box label[for="grand"] {
+      font-weight: bold;
+      font-size: 20px;
     }
 
     .total-box input {
@@ -319,7 +407,18 @@
       font-weight: bold;
       color: #0bbcd6;
       text-align: right;
-      width: 200px;
+      width: 220px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .gst-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 6px;
     }
 
     .action-buttons {
@@ -335,14 +434,14 @@
     .action-btn {
       width: 56px;
       height: 56px;
-      background: #0bbcd6;
+      background-color: #0bbcd6;
       color: white;
       border: none;
       border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(11,188,214,0.4);
       transition: all 0.3s;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
@@ -407,21 +506,6 @@
     #saveBtn { background: #28a745; }
     #loadBtn { background: #ffc107; color: #212529; }
 
-    @media (max-width: 768px) {
-      .action-buttons {
-        flex-direction: column;
-        align-items: flex-end;
-      }
-      .action-btn {
-        width: 52px;
-        height: 52px;
-      }
-      .action-btn svg {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
     .page-number {
       text-align: center;
       margin-top: 20px;
@@ -429,17 +513,109 @@
       color: #888;
     }
 
+    .terms-image-page {
+      page-break-before: always;
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .terms-image-page img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ====================== PRINT STYLES ====================== */
     @media print {
-      body { background: white; padding: 0; }
-      .container { box-shadow: none; border-radius: 0; }
-      .add-section, .dropdown, .form-btn-section, .delete-btn, .project-section, .action-buttons {
+      body { 
+        background: white; 
+        padding: 0; 
+        margin: 0; 
+      }
+
+      .container { 
+        box-shadow: none; 
+        border-radius: 0; 
+        margin: 0; 
+        padding: 15mm 12mm; 
+        width: 210mm;
+        min-height: 297mm;
+      }
+
+      /* Show only the professional quotation */
+      .header,
+      .project-heading,
+      .print-table,
+      .print-summary,
+      .page-number {
+        display: block !important;
+      }
+
+      .print-table,
+      .print-summary {
+        display: block !important;
+      }
+
+      .terms-image-page {
+        display: block !important;
+        page-break-before: always;
+      }
+
+      .terms-image-page img {
+        object-fit: contain;
+      }
+
+      /* Hide everything else */
+      .add-section, 
+      .dropdown, 
+      .form-btn-section, 
+      .delete-btn, 
+      .project-section,
+      .action-buttons, 
+      .screen-only, 
+      .type-manual, 
+      .glazing-manual, 
+      .color-manual,
+      .gst-toggle-wrapper, 
+      .type-select, 
+      .glazing-select, 
+      .color-select, 
+      .brand-select,
+      .hardware-select, 
+      .dim-unit, 
+      .qty-input, 
+      .rate, 
+      .area,
+      .footer,
+      .forms-area,
+      .form-box {
         display: none !important;
       }
-      .page-number::after {
-        counter-increment: page;
-        content: "Page " counter(page);
+
+      .print-table {
+        display: table !important;
+        font-size: 11pt;
       }
-      .form-box, .footer { page-break-inside: avoid; }
+
+      .print-table th, .print-table td {
+        border: 1px solid #777;
+      }
+
+      .print-summary {
+        font-size: 12pt;
+      }
+
+      .print-summary .grand-total {
+        font-size: 15pt;
+      }
     }
   </style>
 </head>
@@ -448,23 +624,21 @@
 <div class="container a4">
   <div class="header">
     <div class="logo">
-      <img src="https://raw.githubusercontent.com/AbhijithSrinivas/PinakaQT/main/pinaka_logo.jpg" alt="Logo">
+      <img src="https://raw.githubusercontent.com/pinakasolution/Quotation/main/pinaka_logo.jpg" alt="Logo">
     </div>
     <div class="company">
       <h2>Pinaka Solution</h2>
       <p>D 315/A, 2nd Gate Industrial Estate,
-Gokul Road, Hubli – 580030
-</p>
+       Gokul Road, Hubli – 580030 </p>
       <p>Email: Pinakasolution@gamil.com<br>
-        Contact: +91 84310 61098 | 84313 11036
-</p>
+        Contact: +91 84310 61098 | 84313 11036</p>
     </div>
   </div>
 
   <div class="project-heading" id="projectHeading">Quotation</div>
 
   <div class="project-section">
-    <label for="projectName">Enter the name of your project</label>
+    <label for="projectName">Enter the name of the project</label>
     <input type="text" id="projectName" placeholder="e.g. Mr. Rajesh Residence, Hubli" autofocus>
   </div>
 
@@ -475,29 +649,76 @@ Gokul Road, Hubli – 580030
       <div class="product-grid">
         <div class="product-card" onclick="selectProduct('UPVC')">UPVC</div>
         <div class="product-card" onclick="selectProduct('Aluminium')">Aluminium</div>
+        <div class="product-card" onclick="selectProduct('Interior')">Interior</div>
       </div>
     </div>
   </div>
 
   <div class="forms-area" id="formsArea"></div>
 
-  <div class="footer" id="footer" style="display: none;">
-    <div class="total-box">
-      <label>GST (18%)</label><br>
-      <input id="gst" readonly />
+  <!-- Print-only Table -->
+  <table class="print-table">
+    <thead>
+      <tr>
+        <th>Item Details</th>
+        <th class="qty-col">Qty</th>
+        <th class="sqft-col">Total Sqft<br><small>(Rate/sqft)</small></th>
+        <th class="amount-col">Total Amount</th>
+      </tr>
+    </thead>
+    <tbody id="printTableBody"></tbody>
+  </table>
+
+  <!-- Print Summary -->
+  <div class="print-summary">
+    <div id="printShipping" style="display:none;">Shipping: <span id="printShippingVal">₹0.00</span></div>
+    <div id="printDiscount" style="display:none;">Discount: <span id="printDiscountVal">₹0.00</span></div>
+    <div id="printGST" style="display:none;">GST (18%): <span id="printGSTVal">₹0.00</span></div>
+    
+    <!-- New summary lines -->
+    <div class="extra-line">Total Products: <span id="printTotalProducts">0</span></div>
+    <div class="extra-line">Total Area: <span id="printTotalArea">0.00</span> sqft</div>
+
+    <div class="grand-total">Grand Total: <span id="printGrandTotal">₹0.00</span></div>
+  </div>
+
+  <div class="footer screen-only" id="footer" style="display: none;">
+    <div class="footer-left">
+      <div class="total-box">
+        <label>Shipping</label>
+        <input id="shipping" type="number" value="0" step="0.01">
+      </div>
+      <div class="total-box">
+        <label>Discount (%)</label>
+        <input id="discount" type="number" value="0" min="0" max="100" step="0.01">
+      </div>
     </div>
-    <div class="total-box">
-      <label>Grand Total</label><br>
-      <input id="grand" readonly />
+    <div class="footer-right">
+      <div class="total-box gst-section">
+        <div class="gst-row">
+          <div class="gst-checkbox-wrapper">
+            <input type="checkbox" id="gstToggle" checked>
+          </div>
+          <label class="gst-label">GST (18%)</label>
+        </div>
+        <input id="gst" readonly />
+      </div>
+      <div class="total-box">
+        <label>Grand Total</label>
+        <input id="grand" readonly />
+      </div>
     </div>
   </div>
 
   <div class="page-number"></div>
 </div>
 
-<div class="action-buttons">
+<div class="terms-image-page">
+  <img src="https://raw.githubusercontent.com/pinakasolution/Quotation/main/conditionaccount_pinaka_Finalpage.jpg" alt="Terms and Conditions">
+</div>
 
-  <button class="action-btn" id="downloadBtn" onclick="window.print()" data-tooltip="Download as PDF">
+<div class="action-buttons">
+  <button class="action-btn" id="downloadBtn" data-tooltip="Download as PDF">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
       <path d="M6 14h12v8H6z"/>
@@ -515,7 +736,6 @@ Gokul Road, Hubli – 580030
     </svg>
   </button>
 
-
   <button class="action-btn" id="loadBtn" data-tooltip="Load Quotation">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -528,81 +748,67 @@ Gokul Road, Hubli – 580030
 <input type="file" id="loadInput" accept=".json" style="display: none;">
 
 <script>
-  /* GREEN COMMENT: All product configurations are now completely separated */
-  /* Each product has its own: Type rates, Glazing options, Hardware, and BRANDS */
   const productConfigs = {
     'UPVC': {
-      /* CHANGE UPVC RATES HERE */
       typeOptions: [
-        {value: "570", label: "3 Track – ₹570 / sqft"},
-        {value: "500", label: "2.5 Track – ₹500 / sqft"},
-        {value: "490", label: "2 Track – ₹490 / sqft"},
-        {value: "480", label: "Ventilator – ₹480 / sqft"}
+        {value: "570", label: "3 Track"},
+        {value: "500", label: "2.5 Track"},
+        {value: "490", label: "2 Track"},
+        {value: "480", label: "Ventilator"},
+        {value: "480", label: "Openable"},
+        {value: "480", label: "Fix"}
       ],
-      /* ADD / CHANGE UPVC BRANDS HERE */
-      brandOptions: [
-        "Select",
-        "UPVC Green Tech",
-    
-      ],
+      brandOptions: ["UPVC Green Tech"],
       hasGlazing: false,
       hasHardware: false
     },
     'Aluminium': {
-      /* CHANGE ALUMINIUM RATES HERE */
       typeOptions: [
-        {value: "480", label: "Aluminium 60 mm – ₹480 / sqft"},
-        {value: "370", label: "Aluminium 40 mm – ₹370 / sqft"},
-        {value: "750", label: "Aluminium Domal – Start ₹750 / sqft"},
-        {value: "1250", label: "Aluminium Interior – Start ₹1250 / sqft"}
+        {value: "570", label: "3 Track"},
+        {value: "500", label: "2.5 Track"},
+        {value: "490", label: "2 Track"},
+        {value: "480", label: "Ventilator"},
+        {value: "480", label: "Openable"},
+        {value: "480", label: "Fix"}
       ],
-      /* CHANGE ALUMINIUM GLAZING RATES HERE */
       glazingOptions: [
-        {value: "0", label: "Select"},
-        {value: "290", label: "Glazing – ₹290 / sq ft"},
-        {value: "260", label: "ACP Panel – ₹260 / sq ft"}
+        {value: "290", label: "Glazing"},
+        {value: "260", label: "ACP Panel"},
+        {value: "260", label: "Domol"}
       ],
-      /* ADD / CHANGE ALUMINIUM BRANDS HERE */
-      brandOptions: [
-        "Select",
-        "Jindal Aluminium",
-    
-      ],
-      hasHardware: true
+      brandOptions: ["Jindal Aluminium"],
+      hasHardware: false
     },
     'Interior': {
-      /* CHANGE INTERIOR RATES HERE */
       typeOptions: [
-        {value: "570", label: "3 Track – ₹570 / sqft"},
-        {value: "500", label: "2.5 Track – ₹500 / sqft"},
-        {value: "490", label: "2 Track – ₹490 / sqft"},
-        {value: "480", label: "Ventilator – ₹480 / sqft"}
+        {value: "570", label: "Tv Unit"},
+        {value: "500", label: "Shoe rack / Foyer unit"},
+        {value: "490", label: "Modular kitchen | Wall unit loft"},
+        {value: "490", label: "Crockery Unit"},
+        {value: "490", label: "Pooja Unit"},
+        {value: "490", label: "Partition"},
+        {value: "490", label: "Wall Panelling"},
+        {value: "490", label: "Wardrobe & loft"},
+        {value: "490", label: "Bar Unit"},
+        {value: "490", label: "Home Theatre"},
+        {value: "490", label: "Bed"},
+        {value: "490", label: "Glass Reeling"},
+        {value: "490", label: "SS Reeling"},
+        {value: "490", label: "Glass"},
+        {value: "480", label: "Glazing"}
       ],
-      /* ADD / CHANGE INTERIOR BRANDS HERE */
-      brandOptions: [
-        "Greenlam",
-        "Century Ply",
-        "Merino",
-        "Local Interior"
-      ],
-      hasGlazing: true, // non-priced glazing types
+      brandOptions: ["Greenlam","Century Ply","Merino","Local Interior"],
+      hasGlazing: true,
       hasHardware: false
     },
     'Exterior': {
-      /* CHANGE EXTERIOR RATES HERE */
       typeOptions: [
-        {value: "570", label: "3 Track – ₹570 / sqft"},
-        {value: "500", label: "2.5 Track – ₹500 / sqft"},
-        {value: "490", label: "2 Track – ₹490 / sqft"},
-        {value: "480", label: "Ventilator – ₹480 / sqft"}
+        {value: "570", label: "3 Track"},
+        {value: "500", label: "2.5 Track"},
+        {value: "490", label: "2 Track"},
+        {value: "480", label: "Ventilator"}
       ],
-      /* ADD / CHANGE EXTERIOR BRANDS HERE */
-      brandOptions: [
-        "Duro",
-        "Alstone",
-        "Aludecor",
-        "Local Exterior"
-      ],
+      brandOptions: ["Duro","Alstone","Aludecor","Local Exterior"],
       hasGlazing: true,
       hasHardware: false
     }
@@ -623,6 +829,9 @@ Gokul Road, Hubli – 580030
   const loadBtn = document.getElementById('loadBtn');
   const loadInput = document.getElementById('loadInput');
   const footer = document.getElementById('footer');
+  const gstToggle = document.getElementById('gstToggle');
+  const shippingInput = document.getElementById('shipping');
+  const discountInput = document.getElementById('discount');
 
   let projectNameEntered = false;
   let hasProducts = false;
@@ -630,14 +839,14 @@ Gokul Road, Hubli – 580030
   function updateVisibility() {
     if (projectNameEntered && hasProducts) {
       footer.style.display = 'flex';
-      downloadBtn.style.display = 'flex';
-      saveBtn.style.display = 'flex';
+      downloadBtn.parentElement.style.display = 'flex';
+      saveBtn.parentElement.style.display = 'flex';
     } else {
       footer.style.display = 'none';
-      downloadBtn.style.display = 'none';
-      saveBtn.style.display = 'none';
+      downloadBtn.parentElement.style.display = 'none';
+      saveBtn.parentElement.style.display = 'none';
     }
-    loadBtn.style.display = 'flex';
+    loadBtn.parentElement.style.display = 'flex';
   }
 
   projectInput.addEventListener('input', function() {
@@ -655,9 +864,7 @@ Gokul Road, Hubli – 580030
   });
 
   function hideAllAddButtons() {
-    document.querySelectorAll('.form-btn-section').forEach(section => {
-      section.style.display = 'none';
-    });
+    document.querySelectorAll('.form-btn-section').forEach(section => section.style.display = 'none');
     document.querySelectorAll('.dropdown.active').forEach(dd => {
       dd.classList.remove('active');
       dd.previousElementSibling.classList.remove('active');
@@ -666,8 +873,9 @@ Gokul Road, Hubli – 580030
 
   function getProductPrefix(product) {
     switch(product) {
-      case 'UPVC': return 'UP';
-      case 'Aluminium': return 'Al';
+      case 'UPVC': return 'UPV';
+      case 'Aluminium': return 'ALU';
+      case 'Interior': return 'INT';
       default: return 'PR';
     }
   }
@@ -685,10 +893,10 @@ Gokul Road, Hubli – 580030
 
   function updateLastAddButton() {
     const forms = document.querySelectorAll('.form-box');
-    const lastForm = forms[forms.length - 1];
-    if (lastForm) {
-      const lastBtnSection = lastForm.querySelector('.form-btn-section');
-      lastBtnSection.style.display = 'block';
+    if (forms.length > 0) {
+      document.querySelectorAll('.form-btn-section').forEach(s => s.style.display = 'none');
+      const lastForm = forms[forms.length - 1];
+      lastForm.querySelector('.form-btn-section').style.display = 'block';
     }
   }
 
@@ -697,12 +905,13 @@ Gokul Road, Hubli – 580030
     renumberProducts();
     calcTotals();
     updateLastAddButton();
+    updatePrintTable();
+    updatePrintSummaryExtras();
 
     hasProducts = document.querySelectorAll('.form-box').length > 0;
     updateVisibility();
   }
 
-  /* GREEN COMMENT: Each product now gets its own unique brand list, type rates, glazing, hardware */
   function selectProduct(product) {
     hideAllAddButtons();
 
@@ -714,63 +923,43 @@ Gokul Road, Hubli – 580030
 
     const config = productConfigs[product];
 
-    /* Build Brand dropdown - completely separate for each product */
-    let brandOptionsHTML = '';
-    config.brandOptions.forEach(brand => {
-      brandOptionsHTML += `<option>${brand}</option>`;
-    });
-
-    /* Build Type dropdown - separate rates for each product */
-    let typeOptionsHTML = `<option value="">Select</option>`;
-    config.typeOptions.forEach(opt => {
-      typeOptionsHTML += `<option value="${opt.value}">${opt.label}</option>`;
-    });
+    let brandOptionsHTML = config.brandOptions.map(b => `<option>${b}</option>`).join('');
+    let typeOptionsHTML = `<option value="">Select Type</option>` + 
+      config.typeOptions.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
 
     let typeHTML = `
       <div><label>Type</label>
-        <select class="type-select">
-          ${typeOptionsHTML}
-        </select>
-      </div>
-    `;
+        <select class="type-select">${typeOptionsHTML}</select>
+        <input type="number" class="type-manual" placeholder="Custom Rate / sqft" step="0.01">
+      </div>`;
 
     let glazingHTML = '';
     if (product === 'Aluminium') {
-      let glazingOptionsHTML = '';
-      config.glazingOptions.forEach(opt => {
-        glazingOptionsHTML += `<option value="${opt.value}">${opt.label}</option>`;
-      });
+      let glazingOptionsHTML = `<option value="">Select</option>` +
+        config.glazingOptions.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
       glazingHTML = `
         <div><label>Glazing / Panel</label>
-          <select class="glazing-select">
-            ${glazingOptionsHTML}
-          </select>
-        </div>
-      `;
+          <select class="glazing-select">${glazingOptionsHTML}</select>
+          <input type="number" class="glazing-manual" placeholder="Custom Rate / sqft" step="0.01">
+        </div>`;
     } else if (config.hasGlazing) {
       glazingHTML = `
         <div><label>Glazing</label>
-          <select>
+          <select class="glazing-select">
             <option>Clear Glass</option>
             <option>Frosted Glass</option>
             <option>Toughened Glass</option>
           </select>
-        </div>
-      `;
+        </div>`;
     }
 
-    let hardwareHTML = '';
-    if (config.hasHardware) {
-      hardwareHTML = `
-        <div><label>Hardware Used</label>
-          <select class="hardware-select">
-            <option>Select</option>
-            <option>Chrome Track Wool</option>
-            <option>RPF Bearing Hardwares</option>
-          </select>
-        </div>
-      `;
-    }
+    let hardwareHTML = config.hasHardware ? `
+      <div><label>Hardware Used</label>
+        <select class="hardware-select">
+          <option>Chrome Track Wool</option>
+          <option>RPF Bearing Hardwares</option>
+        </select>
+      </div>` : '';
 
     const form = document.createElement('div');
     form.className = 'form-box';
@@ -781,31 +970,33 @@ Gokul Road, Hubli – 580030
       </div>
 
       <div class="dimensions-row">
-        <div><label>Width (mm)</label><input type="number" class="w" step="1"></div>
-        <div><label>Height (mm)</label><input type="number" class="h" step="1"></div>
+        <div><label>Width</label>
+          <div class="dimension-group">
+            <input type="number" class="w" step="0.1" placeholder="0">
+            <select class="dim-unit"><option value="mm">mm</option><option value="inch">inch</option><option value="feet">feet</option></select>
+          </div>
+        </div>
+        <div><label>Height</label>
+          <div class="dimension-group">
+            <input type="number" class="h" step="0.1" placeholder="0">
+            <select class="dim-unit"><option value="mm">mm</option><option value="inch">inch</option><option value="feet">feet</option></select>
+          </div>
+        </div>
         <div><label>Total Area (sqft)</label><input class="area" readonly></div>
       </div>
 
       <div class="grid">
-        <div><label>Profile Brand</label>
-          <select class="brand-select">
-            ${brandOptionsHTML}
-          </select>
-        </div>
-
+        <div><label>Profile Brand</label><select class="brand-select">${brandOptionsHTML}</select></div>
         ${typeHTML}
-
         ${glazingHTML}
-
         ${hardwareHTML}
-
         <div><label>Profile Color</label>
           <select class="color-select">
-            <option value="0">White – Included</option>
-            <option value="900">Colour Profile Start ₹900 / sqft</option>
+            <option value="0">White</option>
+            <option value="900">Colour Profile</option>
           </select>
+          <input type="number" class="color-manual" placeholder="Custom Rate / sqft" step="0.01">
         </div>
-
         <div><label>Rate / Sqft</label><input type="number" class="rate" step="0.01" readonly></div>
       </div>
 
@@ -822,35 +1013,39 @@ Gokul Road, Hubli – 580030
 
     container.appendChild(form);
 
-    document.querySelectorAll('.form-btn-section').forEach(section => {
-      section.style.display = 'none';
-    });
-
+    document.querySelectorAll('.form-btn-section').forEach(s => s.style.display = 'none');
     form.querySelector('.form-btn-section').style.display = 'block';
 
-    /* GREEN COMMENT: Event listeners are scoped only to this form → calculations are isolated */
-    const inputsToWatch = form.querySelectorAll('.w, .h, .type-select, .color-select, .qty, .glazing-select');
-    inputsToWatch.forEach(input => {
-      input.addEventListener('input', () => calcForm(form));
+    const unitSelects = form.querySelectorAll('.dim-unit');
+    unitSelects.forEach(s => s.value = 'mm');
+
+    unitSelects.forEach(select => {
+      select.addEventListener('change', function() {
+        unitSelects.forEach(s => { if (s !== this) s.value = this.value; });
+        calcForm(form);
+      });
     });
+
+    form.querySelectorAll('.w, .h, .dim-unit, .type-manual, .glazing-manual, .color-manual, .qty')
+      .forEach(el => el.addEventListener('input', () => calcForm(form)));
 
     hasProducts = true;
     updateVisibility();
     calcTotals();
+    updatePrintTable();
+    updatePrintSummaryExtras();
   }
 
   function toggleDropdown(btn) {
     hideAllAddButtons();
-
     const section = btn.parentElement;
     section.style.display = 'block';
-
     const dropdown = section.querySelector('.dropdown');
     btn.classList.toggle('active');
     dropdown.classList.toggle('active');
 
     if (dropdown.classList.contains('active')) {
-      const closeHandler = function(e) {
+      const closeHandler = e => {
         if (!section.contains(e.target)) {
           btn.classList.remove('active');
           dropdown.classList.remove('active');
@@ -861,159 +1056,223 @@ Gokul Road, Hubli – 580030
     }
   }
 
+  function convertToMM(value, unit) {
+    if (unit === 'mm') return value;
+    if (unit === 'inch') return value * 25.4;
+    if (unit === 'feet') return value * 304.8;
+    return 0;
+  }
+
   function calcForm(form) {
-    const w_mm = parseFloat(form.querySelector('.w').value) || 0;
-    const h_mm = parseFloat(form.querySelector('.h').value) || 0;
+    const unit = form.querySelector('.dim-unit').value;
+    const w = parseFloat(form.querySelector('.w').value) || 0;
+    const h = parseFloat(form.querySelector('.h').value) || 0;
     const qty = parseFloat(form.querySelector('.qty').value) || 1;
 
-    const area_sqmm = w_mm * h_mm;
-    const area_sqft = area_sqmm / 92903.04;
-    form.querySelector('.area').value = area_sqft.toFixed(4);
+    const w_mm = convertToMM(w, unit);
+    const h_mm = convertToMM(h, unit);
+    const sqft = (w_mm * h_mm) / 92903.04;
 
-    const typeSelect = form.querySelector('.type-select');
-    const baseRate = parseFloat(typeSelect.value) || 0;
+    form.querySelector('.area').value = sqft.toFixed(4);
 
-    const colorSelect = form.querySelector('.color-select');
-    const colorRate = parseFloat(colorSelect.value) || 0;
+    let rate = 0;
+    ['.type-manual','.glazing-manual','.color-manual'].forEach(sel => {
+      const val = form.querySelector(sel)?.value;
+      if (val && val.trim() !== '') rate += parseFloat(val);
+    });
 
-    let glazingRate = 0;
-    const glazingSelect = form.querySelector('.glazing-select');
-    if (glazingSelect) {
-      glazingRate = parseFloat(glazingSelect.value) || 0;
-    }
-
-    const totalRate = baseRate + colorRate + glazingRate;
-    form.querySelector('.rate').value = totalRate.toFixed(2);
-
-    const amount = area_sqft * totalRate * qty;
-    form.querySelector('.amountVal').innerText = amount.toFixed(2);
+    form.querySelector('.rate').value = rate.toFixed(2);
+    form.querySelector('.amountVal').textContent = (sqft * rate * qty).toFixed(2);
 
     calcTotals();
+    updatePrintTable();
+    updatePrintSummaryExtras();
   }
 
   function calcTotals() {
-    let total = 0;
-    document.querySelectorAll('.amountVal').forEach(val => {
-      total += parseFloat(val.innerText) || 0;
+    let subtotal = 0;
+    document.querySelectorAll('.amountVal').forEach(v => subtotal += parseFloat(v.textContent) || 0);
+
+    const shipping = parseFloat(shippingInput.value) || 0;
+    let discountPercent = parseFloat(discountInput.value) || 0;
+    if (discountPercent > 100) discountPercent = 100;
+    const discountAmount = subtotal * (discountPercent / 100);
+
+    const afterDiscount = subtotal - discountAmount + shipping;
+    const gstAmount = gstToggle.checked ? afterDiscount * 0.18 : 0;
+    const grandTotal = afterDiscount + gstAmount;
+
+    document.getElementById('gst').value = gstToggle.checked ? '₹' + gstAmount.toFixed(2) : '₹0.00';
+    document.getElementById('grand').value = '₹' + grandTotal.toFixed(2);
+
+    document.getElementById('printShippingVal').textContent = '₹' + shipping.toFixed(2);
+    document.getElementById('printShipping').style.display = shipping > 0 ? 'block' : 'none';
+
+    document.getElementById('printDiscountVal').textContent = '₹' + discountAmount.toFixed(2);
+    document.getElementById('printDiscount').style.display = discountAmount > 0 ? 'block' : 'none';
+
+    document.getElementById('printGSTVal').textContent = '₹' + gstAmount.toFixed(2);
+    document.getElementById('printGST').style.display = gstAmount > 0 ? 'block' : 'none';
+
+    document.getElementById('printGrandTotal').textContent = '₹' + grandTotal.toFixed(2);
+  }
+
+  // ────────────────────────────────────────────────
+  // NEW FUNCTION: Update Total Products & Total Area
+  // ────────────────────────────────────────────────
+  function updatePrintSummaryExtras() {
+    const forms = document.querySelectorAll('.form-box');
+    let totalProducts = forms.length;
+    let totalArea = 0;
+
+    forms.forEach(form => {
+      const areaStr = form.querySelector('.area').value || '0';
+      totalArea += parseFloat(areaStr) || 0;
     });
 
-    const gstAmount = total * 0.18;
-    document.getElementById('gst').value = '₹ ' + gstAmount.toFixed(2);
-    document.getElementById('grand').value = '₹ ' + (total + gstAmount).toFixed(2);
+    document.getElementById('printTotalProducts').textContent = totalProducts;
+    document.getElementById('printTotalArea').textContent = totalArea.toFixed(2);
   }
+
+  function buildPrintRow(form) {
+    const product = form.querySelector('h3').textContent.replace(/×|Product: /g,'').trim();
+    const code = form.querySelector('input[readonly]').value;
+    const w = form.querySelector('.w').value || '0';
+    const h = form.querySelector('.h').value || '0';
+    const unit = form.querySelector('.dim-unit').value;
+    const brand = form.querySelector('.brand-select')?.value || '-';
+    const qty = form.querySelector('.qty').value || '1';
+    const sqft = form.querySelector('.area').value || '0.0000';
+    const rate = form.querySelector('.rate').value || '0.00';
+    const amount = form.querySelector('.amountVal').textContent || '0.00';
+
+    let details = `${product}\nCode: ${code}\nDimensions: ${w} × ${h} ${unit}\nProfile Brand: ${brand}`;
+
+    const addDetail = (label, val) => {
+      if (val && val.trim() !== '' && parseFloat(val) > 0) details += `\n${label}: ₹${val}/sqft`;
+    };
+
+    addDetail('Type Rate', form.querySelector('.type-manual')?.value);
+    addDetail('Glazing/Panel Rate', form.querySelector('.glazing-manual')?.value);
+    addDetail('Color Profile Rate', form.querySelector('.color-manual')?.value);
+
+    return { details, qty, sqft, rate, amount };
+  }
+
+  function updatePrintTable() {
+    const tbody = document.getElementById('printTableBody');
+    tbody.innerHTML = '';
+
+    document.querySelectorAll('.form-box').forEach(form => {
+      const r = buildPrintRow(form);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="item-details"><pre style="margin:0; font-family:inherit; white-space:pre-wrap;">${r.details}</pre></td>
+        <td class="qty-col">${r.qty}</td>
+        <td class="sqft-col">${parseFloat(r.sqft).toFixed(2)} sqft<br><small>₹${r.rate}</small></td>
+        <td class="amount-col">₹${r.amount}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Update totals after table is built
+    updatePrintSummaryExtras();
+  }
+
+  shippingInput.addEventListener('input', calcTotals);
+  discountInput.addEventListener('input', calcTotals);
+  gstToggle.addEventListener('change', calcTotals);
 
   const addBtn = document.getElementById('addBtn');
   const initialDropdown = document.getElementById('dropdown');
 
-  addBtn.addEventListener('click', function(e) {
+  addBtn.addEventListener('click', e => {
     e.stopPropagation();
     addBtn.classList.toggle('active');
     initialDropdown.classList.toggle('active');
   });
 
-  document.addEventListener('click', function() {
+  document.addEventListener('click', () => {
     addBtn.classList.remove('active');
     initialDropdown.classList.remove('active');
   });
 
-  initialDropdown.addEventListener('click', function(e) {
-    e.stopPropagation();
-  });
+  initialDropdown.addEventListener('click', e => e.stopPropagation());
 
-  /* GREEN COMMENT: Save/Load now correctly handles separate brand lists per product */
   function collectQuotationData() {
     const data = {
       projectName: document.getElementById('projectName').value.trim(),
+      includeGST: gstToggle.checked,
+      shipping: shippingInput.value || '0',
+      discount: discountInput.value || '0',
       products: []
     };
 
     document.querySelectorAll('.form-box').forEach(form => {
-      const product = {
-        type: form.querySelector('h3').textContent.replace('Product: ', '').replace('×', '').trim(),
+      data.products.push({
+        type: form.querySelector('h3').textContent.replace(/×|Product: /g,'').trim(),
         code: form.querySelector('input[readonly]').value,
-        width_mm: form.querySelector('.w').value,
-        height_mm: form.querySelector('.h').value,
+        width: form.querySelector('.w').value,
+        height: form.querySelector('.h').value,
+        dimension_unit: form.querySelector('.dim-unit').value,
         profileBrand: form.querySelector('.brand-select')?.value || '',
-        typeSelect: form.querySelector('.type-select').value,
-        glazing: form.querySelector('.glazing-select')?.value || '',
-        hardware: form.querySelector('.hardware-select')?.value || '',
-        profileColor: form.querySelector('.color-select').value,
+        typeManual: form.querySelector('.type-manual')?.value || '',
+        glazingManual: form.querySelector('.glazing-manual')?.value || '',
+        colorManual: form.querySelector('.color-manual')?.value || '',
         rate: form.querySelector('.rate').value,
         qty: form.querySelector('.qty').value
-      };
-      data.products.push(product);
+      });
     });
-
     return data;
   }
 
   saveBtn.addEventListener('click', () => {
-    if (!projectNameEntered) {
-      alert('Please enter a project name first!');
-      return;
-    }
-    if (!hasProducts) {
-      alert('Add at least one product before saving!');
-      return;
-    }
+    if (!projectNameEntered) return alert('Please enter a project name first!');
+    if (!hasProducts) return alert('Add at least one product before saving!');
 
     const data = collectQuotationData();
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
     const url = URL.createObjectURL(blob);
-
     const a = document.createElement('a');
     a.href = url;
-    const safeName = data.projectName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-    a.download = `${safeName}_quotation.json`;
+    a.download = `${data.projectName.replace(/[^a-z0-9]/gi,'_').toLowerCase()}_quotation.json`;
     a.click();
-
     URL.revokeObjectURL(url);
   });
 
-  loadBtn.addEventListener('click', () => {
-    loadInput.click();
-  });
+  loadBtn.addEventListener('click', () => loadInput.click());
 
-  loadInput.addEventListener('change', (e) => {
+  loadInput.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (ev) => {
+    reader.onload = ev => {
       try {
         const data = JSON.parse(ev.target.result);
-
         document.getElementById('formsArea').innerHTML = '';
         document.getElementById('projectName').value = data.projectName || '';
         projectHeading.textContent = data.projectName || 'Quotation';
         projectNameEntered = !!data.projectName;
         initialAddSection.style.display = projectNameEntered ? 'block' : 'none';
 
-        data.products.forEach(productData => {
-          selectProduct(productData.type);
+        gstToggle.checked = data.includeGST !== undefined ? data.includeGST : true;
+        shippingInput.value = data.shipping || '0';
+        discountInput.value = data.discount || '0';
 
-          const lastForm = document.querySelector('.form-box:last-child');
-          lastForm.querySelector('input[readonly]').value = productData.code;
-          lastForm.querySelector('.w').value = productData.width_mm || '';
-          lastForm.querySelector('.h').value = productData.height_mm || '';
-          
-          const brandSelect = lastForm.querySelector('.brand-select');
-          if (brandSelect) brandSelect.value = productData.profileBrand || brandSelect.options[0].value;
-          
-          lastForm.querySelector('.type-select').value = productData.typeSelect || '';
-          
-          const glazingSelect = lastForm.querySelector('.glazing-select');
-          if (glazingSelect) glazingSelect.value = productData.glazing || glazingSelect.options[0].value;
-          
-          const hardwareSelect = lastForm.querySelector('.hardware-select');
-          if (hardwareSelect) hardwareSelect.value = productData.hardware || hardwareSelect.options[0].value;
-          
-          lastForm.querySelector('.color-select').value = productData.profileColor || '0';
-          
-          lastForm.querySelector('.qty').value = productData.qty || '1';
-
-          calcForm(lastForm);
+        data.products.forEach(p => {
+          selectProduct(p.type);
+          const f = document.querySelector('.form-box:last-child');
+          f.querySelector('input[readonly]').value = p.code;
+          f.querySelector('.w').value = p.width || '';
+          f.querySelector('.h').value = p.height || '';
+          f.querySelectorAll('.dim-unit').forEach(s => s.value = p.dimension_unit || 'mm');
+          if (f.querySelector('.brand-select')) f.querySelector('.brand-select').value = p.profileBrand || '';
+          if (f.querySelector('.type-manual')) f.querySelector('.type-manual').value = p.typeManual || '';
+          if (f.querySelector('.glazing-manual')) f.querySelector('.glazing-manual').value = p.glazingManual || '';
+          if (f.querySelector('.color-manual')) f.querySelector('.color-manual').value = p.colorManual || '';
+          f.querySelector('.qty').value = p.qty || '1';
+          calcForm(f);
         });
 
         renumberProducts();
@@ -1021,20 +1280,36 @@ Gokul Road, Hubli – 580030
         hasProducts = data.products.length > 0;
         updateVisibility();
         calcTotals();
+        updatePrintTable();
+        updatePrintSummaryExtras();
 
         alert('Quotation loaded successfully!');
       } catch (err) {
-        console.error(err);
         alert('Invalid or corrupted JSON file!');
       }
     };
     reader.readAsText(file);
-
     e.target.value = '';
+  });
+
+  downloadBtn.addEventListener('click', e => {
+    if (!projectNameEntered) {
+      alert('Please enter a project name before downloading PDF!');
+      return;
+    }
+
+    const name = document.getElementById('projectName').value.trim();
+    const safe = name.replace(/[^a-z0-9]/gi,'_').toLowerCase();
+    const d = new Date();
+    const date = `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
+
+    document.title = `${safe}_quotation_${date}.pdf`;
+    window.print();
+
+    setTimeout(() => document.title = 'Quotation Form', 1000);
   });
 
   updateVisibility();
 </script>
-
 </body>
 </html>
